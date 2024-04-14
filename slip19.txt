@@ -1,0 +1,78 @@
+Q1-----
+
+<?xml version="1.0" encoding="utf-8"?> 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/re s/android"  
+xmlns:app="http://schemas.android.com/apk/resao"     xmlns:tools="http://schemas.android.com/tools"     android:layout_width="match_parent"     android:layout_height="match_parent"     android:orientation="vertical"     android:padding="16dp" 
+    tools:context=".MainActivity"> 
+ <ImageView         android:id="@+id/image"         android:layout_width="350dp"         android:layout_height="350dp"         android:layout_gravity="center"         android:layout_marginTop="20dp"         android:src="@drawable/bulb_off" /> 
+  <ToggleButton         android:id="@+id/toggleButton"         android:layout_width="122dp"         android:layout_height="wrap_content"         android:checked="false"         android:text="Toggle Button" /> 
+</LinearLayout> ----java 
+package com.example.slip19_q1; import androidx.appcompat.app.AppCompatActivity; import android.os.Bundle; import android.widget.CompoundButton; import android.widget.ImageView; import android.widget.ToggleButton; 
+public class MainActivity extends AppCompatActivity 
+{ 
+    private ToggleButton toggleButton;     private ImageView image; 
+    @Override 
+    protected void onCreate(Bundle savedInstanceState) {         super.onCreate(savedInstanceState);         setContentView(R.layout.activity_main);         image=findViewById(R.id.image);         toggleButton=findViewById(R.id.toggleButton);         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() { 
+            @Override 
+            public void 
+onCheckedChanged(CompoundButton buttonView, 
+boolean isChecked) {            if (isChecked) { 
+          image.setImageResource(R.drawable.bulb_on);                 } else { 
+          image.setImageResource(R.drawable.bulb_off); 
+                }            }        });   } 
+}
+
+ 
+ Q2)--
+
+ 
+<RelativeLayoutxmlns:android="http://schemas.andr oid.com/apk/res/android" 
+xmlns:app="http://schemas.android.com/apk/resauto" 
+xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context=".MainActivity"> 
+<TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" android:textSize="30dp" /><TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="30dp" 
+android:layout_below="@+id/textView1" /> 
+<EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/editText" android:hint="Enter Phone Number" android:layout_centerHorizontal="true" /> 
+<EditText android:id="@+id/editText2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/editText" android:layout_centerHorizontal="true" android:hint="Enter SMS" /> 
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Send Sms" android:id="@+id/btnSendSMS" android:layout_below="@+id/editText2" android:layout_centerHorizontal="true" android:layout_marginTop="48dp" /> 
+</RelativeLayout> ---Main.java--- 
+public class MainActivityextends AppCompatActivity{ 
+private static final int 
+MY_PERMISSIONS_REQUEST_SEND_MSG = 0; 
+Button sendBtn; 
+EditTexttxtphoneNo; 
+EditTexttxtMessage; 
+String phoneNo; 
+String message; @Override 
+protected void onCreate(Bundle savedInstanceState) 
+{ 
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); sendBtn= (Button) findViewById(R.id.btnSendSMS); txtphoneNo= (EditText) findViewById(R.id.editText); txtMessage= (EditText) findViewById(R.id.editText2); 
+sendBtn.setOnClickListener(new View.OnClickListener() { public void onClick(View view) { 
+sendSMSMessage(); 
+            }        });    } 
+protected void sendSMSMessage() { phoneNo= txtphoneNo.getText().toString(); message = txtMessage.getText().toString(); 
+if (ContextCompat.checkSelfPermission(this, 
+SEND_MSG) 
+ !=PackageManager.PERMISSION_GRANTED) { if 
+(ActivityCompat.shouldShowRequestPermissionRatio nale(this, SEND_MSG)) { 
+            } else { 
+ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_MSG}, 
+MY_PERMISSIONS_REQUEST_SEND_MSG); 
+            }        }    } 
+@Override public void onRequestPermissionsResult(int 
+requestCode, String permissions[], int[] grantResults) 
+{ 
+super.onRequestPermissionsResult(requestCode, 
+permissions, grantResults); 
+switch (requestCode) { case MY_PERMISSIONS_REQUEST_SEND_MSG: { 
+if (grantResults.length>0 
+&&grantResults[0] == 
+PackageManager.PERMISSION_GRANTED) { 
+SmsManagersmsManager= SmsManager.getDefault(); smsManager.sendTextMessage(phoneNo, null, message, null, null); 
+Toast.makeText(getApplicationContext(), "SMS sent.", 
+Toast.LENGTH_LONG).show(); 
+                } else { 
+Toast.makeText(getApplicationContext(), 
+"SMS faild, please try again.", Toast.LENGTH_LONG).show(); return; 
+                }  
+         }    
+   } 

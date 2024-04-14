@@ -1,0 +1,71 @@
+ *Slip 14 Q1— 
+ 
+package com.example.activity_life_cycle; import androidx.appcompat.app.AppCompatActivity; import android.os.Bundle; import android.widget.Toast;  
+public class MainActivity extends AppCompatActivity {  
+   @Override      protected void onCreate(Bundle savedInstanceState) {         
+super.onCreate(savedInstanceState);  
+        setContentView(R.layout.activity_main);  
+    }  
+    @Override      protected void onStart() {         
+super.onStart();  
+        Toast.makeText(this, "OnStart Called", Toast.LENGTH_SHORT).show();  
+    }  
+   @Override     protected void onResume() {         super.onResume();  
+        Toast.makeText(this, "OnResume Called", Toast.LENGTH_SHORT).show();  
+    }  
+   @Override     protected void onPause() {         super.onPause();  
+        Toast.makeText(this, "OnPause Called", Toast.LENGTH_SHORT).show();  
+    }  
+    @Override  
+    protected void onStop() {  super.onStop();  
+        Toast.makeText(this, "OnStop Called", Toast.LENGTH_SHORT).show();  
+    }  
+    @Override      protected void onRestart() {         
+super.onRestart();  
+        Toast.makeText(this, "OnRestart Called", Toast.LENGTH_SHORT).show();  
+    }  
+    @Override     protected void onDestroy() {         super.onDestroy();  
+        Toast.makeText(this, "OnDestroy Called", Toast.LENGTH_SHORT).show();  
+    }  
+}
+  
+Q2)---
+
+<?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"     xmlns:app="http://schemas.android.com/apk/res-auto"     xmlns:tools="http://schemas.android.com/tools"     android:layout_width="match_parent"     android:layout_height="match_parent"    
+  android:orientation="vertical"     tools:context=".MainActivity">  
+    <TextView         android:layout_width="match_parent"         android:layout_height="wrap_content"         android:background="@color/black"         android:text="Spinner Style"         android:textColor="@color/white"         android:textColorHighlight="#9E3131"         android:textSize="35dp" />  
+    <TextView         android:layout_width="match_parent"         android:layout_height="wrap_content"         
+android:layout_marginTop="20dp"  
+        android:text="Coffee"         
+android:textSize="20dp" />  
+    <Spinner  
+        android:id="@+id/spinner1"         
+android:layout_width="match_parent"         android:layout_height="wrap_content"         android:layout_marginTop="20dp"        
+  android:prompt="@color/black" />  
+</LinearLayout>  
+
+---java---  
+
+package com.example.spinner;  
+import androidx.appcompat.app.AppCompatActivity; import android.os.Bundle; import android.view.View; import android.widget.AdapterView; import android.widget.ArrayAdapter; import android.widget.Spinner; import 
+android.widget.TextView; import java.util.ArrayList;  
+public class MainActivity extends AppCompatActivity {     
+private Spinner spinner;    
+  float fontsize=16;      
+@Override  
+    protected void onCreate(Bundle savedInstanceState) {         
+super.onCreate(savedInstanceState);         setContentView(R.layout.activity_main);         spinner=(Spinner) findViewById(R.id.spinner1);         ArrayList<String> list=new ArrayList<>();         list.add("Filter");         list.add("Americano");         list.add("Latte");         list.add("Espresso");         list.add("Cappucino");         list.add("Mocha");         list.add("Skinny Latte");         list.add("Expresso Corretto");  
+        ArrayAdapter<String> adapter=new ArrayAdapter<>(this,  androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,list);         
+spinner.setAdapter(adapter);  
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {  
+            @Override  
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {  
+                TextView tv=(TextView) adapterView.getChildAt(0);                 if(fontsize<50) {  
+                    tv.setTextSize(fontsize);                     fontsize+= 2;  
+                }else{  
+                    fontsize=16;  
+                }            }  
+            @Override  
+            public void onNothingSelected(AdapterView<?> adapterView) {  
+ }        });   }  }

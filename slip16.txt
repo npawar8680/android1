@@ -1,0 +1,37 @@
+Q2)----
+
+  
+  <?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"     xmlns:app="http://schemas.android.com/apk/res-auto"     xmlns:tools="http://schemas.android.com/tools"     android:layout_width="match_parent"     android:layout_height="match_parent"    
+  android:orientation="vertical"     tools:context=".MainActivity">  
+    <Button  
+        android:id="@+id/bt_show"         
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content"          android:text="show Time"         android:layout_marginTop="50sp"         
+android:layout_gravity="center">  
+    </Button>     <TextView          android:id="@+id/txttime"         
+android:layout_width="match_parent"         
+android:layout_height="wrap_content"  
+        android:textSize="30sp"         android:layout_marginTop="50sp"         android:layout_gravity="bottom">  
+    </TextView>  
+</LinearLayout>  
+
+-----java----  
+
+package com.example.slip16_q2;  
+import androidx.appcompat.app.AppCompatActivity; import android.app.TimePickerDialog; import android.os.Bundle; import android.view.View; import android.widget.Button; import android.widget.TextView; import android.widget.TimePicker;  
+import java.util.Calendar;  public class MainActivity extends AppCompatActivity {  
+    @Override      protected void onCreate(Bundle savedInstanceState) {         
+super.onCreate(savedInstanceState);         setContentView(R.layout.activity_main);         
+ TextView txttime = findViewById(R.id.txttime);         Button bt_show = findViewById(R.id.bt_show);          bt_show.setOnClickListener(new View.OnClickListener() {  
+            @Override  
+            public void onClick(View v) {  
+                final Calendar calendar=Calendar.getInstance();                 
+int hour=calendar.get(Calendar.HOUR);                 i 
+nt minute=calendar.get(Calendar.MINUTE);  
+                TimePickerDialog pickerDialog = new TimePickerDialog(MainActivity.this, new  TimePickerDialog.OnTimeSetListener() {  
+                    @Override  
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {                        txttime.setText("Selected Time is:" + hourOfDay + ":" + minute);  
+                    }  
+                }, hour, minute,false);  
+                pickerDialog.show();            }  });    }  } 
